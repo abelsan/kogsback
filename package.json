@@ -1,0 +1,28 @@
+{
+  "name": "kogsback",
+  "version": "1.0.0",
+  "description": "kogs backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abelsan/kogsback.git"
+  },
+  "keywords": [
+    "kogs"
+  ],
+  "author": "abelsan <abel@mit.edu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abelsan/kogsback/issues"
+  },
+  "homepage": "https://github.com/abelsan/kogsback#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "lowdb": "^0.14.0",
+    "uuid": "^2.0.3"
+  }
+}
