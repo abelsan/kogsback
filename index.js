@@ -57,20 +57,32 @@ app.get('/kogs/:title/:userid/:description/:level/:tags/:image', function(req, r
 app.post('/kogs', function(req, res){
     var kog = {
         "id"          : uuid.v4(),        
-        'title'       : req.params.title, 
-        'userid'      : req.params.userid,
-        'description' : req.params.description,
-        'level'       : req.params.level,
-        'tags'        : req.params.tags,
-        'image'       : req.params.image,
+        'title'       : req.body.title, 
+        'userid'      : req.body.userid,
+        'description' : req.body.description,
+        'level'       : req.body.level,
+        'tags'        : req.body.tags,
+        'image'       : req.body.image,
     };
     kogs.push(kog).last().value();
     console.log(kog);   
-    res.end('ok');
+    res.send('ok');    
+    res.end();
 });
+
+// used for testing
+app.get('/alive', function(req, res){ 
+    console.log('ping!');
+    res.send({alive : true});
+    res.end();    
+});
+
 
 // start server
 var port = 3000;
 app.listen(port, function(){
     console.log('listening on port: ' + port);
 });
+
+// used for testing
+module.exports.app = app;
