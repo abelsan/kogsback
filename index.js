@@ -3,6 +3,10 @@ var app     = express();
 var low     = require('lowdb');
 var db      = low('db.json');
 var uuid    = require('uuid');
+var multer  = require('multer');
+var upload  = multer({ dest: 'uploads/' });
+var fs      = require('fs');
+
 
 // http form handling 
 var bodyParser = require('body-parser');
@@ -53,6 +57,9 @@ app.get('/kogs/:title/:userid/:description/:level/:tags/:image', function(req, r
     res.end('ok');
 });
 
+
+
+/*
 // add kog using POST
 app.post('/kogs', function(req, res){
     var kog = {
@@ -69,6 +76,70 @@ app.post('/kogs', function(req, res){
     res.send('ok');    
     res.end();
 });
+*/
+
+app.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
+
+    var id   = uuid.v4();
+    var date = JSON.stringify(new Date());
+
+    var kog = {
+        "id"          : id,        
+        'title'       : req.body.title, 
+        'userid'      : 'peter',
+        'description' : req.body.description,
+        'level'       : req.body.level,
+        'tags'        : req.body.tags,
+        'date'        : date,        
+        'image'       : id.replace(/-/g, '')
+    };
+
+    var data = JSON.parse(req.body.userPhoto);
+    console.log(data.input.name);
+    console.log(data.input.type);  
+    saveImage(data.output.image, data.input.type);  
+
+
+    kogs.push(kog).last().value();
+    console.log(kog);   
+    res.send('ok');    
+    res.end();
+});
+
+
+// save the kogs image to disk
+function saveImage(image,type){
+    var prefix = 'data:' + type + ';base64,';
+
+    // remove data image prefix - only base64 data remains
+    image = image.replace(prefix, '');
+
+    // decode base64 image
+    var decoded = new Buffer(image, 'base64');
+
+    // write image to file  
+    fs.writeFile("ping.png", decoded, function(err) {
+        if(err) {
+          return console.log(err);
+        }
+        console.log("The file was saved!");
+    });     
+}
+
+function timestamp(){
+    var stamp = {};
+    var time = new Date(); 
+    stamp.prettyDate = (time.getMonth()+1)  + "/" +
+                    time.getDate() + "/" +
+                    time.getFullYear();
+
+    stamp.prettyTime = time.getHours() + ":" + 
+                    time.getMinutes() + ":" +
+                    time.getSeconds();    
+
+    stamp.json = JSON.stringify(time);
+    return stamp;    
+}
 
 // used for testing
 app.get('/alive', function(req, res){ 
@@ -76,7 +147,6 @@ app.get('/alive', function(req, res){
     res.send({alive : true});
     res.end();    
 });
-
 
 // start server
 var port = 3000;
