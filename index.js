@@ -7,6 +7,12 @@ var multer  = require('multer');
 var upload  = multer({ dest: 'uploads/' });
 var fs      = require('fs');
 
+// allow CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // http form handling 
 var bodyParser = require('body-parser');
@@ -18,7 +24,7 @@ db.defaults({ kogs: [] }).value();
 var kogs = db.get('kogs');
 
 // list all kogs
-app.get('/', function(req, res){ 
+app.get('/kogs', function(req, res){ 
     console.log('number of kogs: ' + kogs.size().value());
     console.log(kogs.value()); 
     res.send(kogs.value());
