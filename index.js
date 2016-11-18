@@ -6,6 +6,7 @@ var uuid    = require('uuid');
 var multer  = require('multer');
 var upload  = multer({ dest: 'uploads/' });
 var fs      = require('fs');
+var getYouTubeID = require('get-youtube-id');
 
 // allow CORS
 app.use(function(req, res, next) {
@@ -20,8 +21,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // init the data store
-db.defaults({ kogs: [] }).value();
-var kogs = db.get('kogs');
+db.defaults({ kogs: [], videos:[] }).value();
+var kogs   = db.get('kogs');
+var videos = db.get('videos');
 
 // list all kogs
 app.get('/kogs', function(req, res){ 
@@ -63,6 +65,23 @@ app.get('/kogs/:title/:userid/:description/:level/:tags/:image', function(req, r
     res.end('ok');
 });
 
+app.post('/videos', function (req, res) {
+
+    var date      = JSON.stringify(new Date());
+
+    var video = {
+        "id"          : req.body.id,        
+        'title'       : req.body.title, 
+        'link'        : req.body.link,
+        'description' : req.body.description,
+        'date'        : date
+    };
+
+    videos.push(video).last().value();
+    console.log(video);   
+    res.send(video);    
+    res.end();
+});
 
 
 /*
