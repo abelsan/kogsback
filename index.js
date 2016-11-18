@@ -108,7 +108,7 @@ app.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
 
     kogs.push(kog).last().value();
     console.log(kog);   
-    res.send('ok');    
+    res.send(kog);    
     res.end();
 });
 
