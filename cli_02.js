@@ -5,11 +5,14 @@ var db 	= low('db.json');
 db.defaults({ kogs: [], videos:[] }).value();
 var videos = db.get('videos');
 
-// list all videos
-console.log('list of all videos: ');
-console.log(videos.value()); 
+// // list all videos
+// console.log('list of all videos: ');
+// console.log(videos.value()); 
 
-// list all video
-var id = '88d62f61-afc0-4f2a-85a7-1cb61ebd2c82';
+// list video - returns first hit
+var id = '32d657a9-e3cf-4c0e-91b6-a1f1fac57f10';
 var video = videos.find({id:id}).value();
 console.log(video); 
+
+// returns all matches
+console.log(videos.filter({id:'32d657a9-e3cf-4c0e-91b6-a1f1fac57f10'}).value()); 

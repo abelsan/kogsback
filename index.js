@@ -5,8 +5,8 @@ var db      = low('db.json');
 var uuid    = require('uuid');
 var multer  = require('multer');
 var upload  = multer({ dest: 'uploads/' });
+var images  = require('./images.js');
 var fs      = require('fs');
-var getYouTubeID = require('get-youtube-id');
 
 // allow CORS
 app.use(function(req, res, next) {
@@ -17,8 +17,8 @@ app.use(function(req, res, next) {
 
 // http form handling 
 var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '1mb'}));
+app.use(bodyParser.urlencoded({ extended: true,limit: '1mb' }));
 
 // init the data store
 db.defaults({ kogs: [], videos:[] }).value();
@@ -83,30 +83,25 @@ app.post('/videos', function (req, res) {
     res.end();
 });
 
-
-/*
-// add kog using POST
-app.post('/kogs', function(req, res){
-    var kog = {
-        "id"          : uuid.v4(),        
-        'title'       : req.body.title, 
-        'userid'      : req.body.userid,
-        'description' : req.body.description,
-        'level'       : req.body.level,
-        'tags'        : req.body.tags,
-        'image'       : req.body.image,
-    };
-    kogs.push(kog).last().value();
-    console.log(kog);   
-    res.send('ok');    
+// get videos for kog id
+app.get('/videos/:id', function(req, res){
+    var videoList = videos.filter({id:req.params.id}).value();
+    console.log(videoList); 
+    res.send(videoList);
     res.end();
 });
-*/
 
+// add a new kog
 app.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
 
-    var id   = uuid.v4();
-    var date = JSON.stringify(new Date());
+    // image data
+    var data      = JSON.parse(req.body.userPhoto);
+    var id        = uuid.v4();
+    var date      = JSON.stringify(new Date());
+    var image     = data.output.image;
+    var filename  = id.replace(/-/g, '') + '.jpg';
+    var directory = images.directory();
+    var type      = data.input.type;
 
     var kog = {
         "id"          : id,        
@@ -116,55 +111,18 @@ app.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
         'level'       : req.body.level,
         'tags'        : req.body.tags,
         'date'        : date,        
-        'image'       : id.replace(/-/g, '')
+        'path'        : directory + '/' + filename
     };
 
-    var data = JSON.parse(req.body.userPhoto);
-    console.log(data.input.name);
-    console.log(data.input.type);  
-    saveImage(data.output.image, data.input.type);  
+    // save the uploaded image
+    images.save(image, filename, directory, data.input.type);  
 
-
+    // save the kog data
     kogs.push(kog).last().value();
     console.log(kog);   
     res.send(kog);    
     res.end();
 });
-
-
-// save the kogs image to disk
-function saveImage(image,type){
-    var prefix = 'data:' + type + ';base64,';
-
-    // remove data image prefix - only base64 data remains
-    image = image.replace(prefix, '');
-
-    // decode base64 image
-    var decoded = new Buffer(image, 'base64');
-
-    // write image to file  
-    fs.writeFile("ping.png", decoded, function(err) {
-        if(err) {
-          return console.log(err);
-        }
-        console.log("The file was saved!");
-    });     
-}
-
-function timestamp(){
-    var stamp = {};
-    var time = new Date(); 
-    stamp.prettyDate = (time.getMonth()+1)  + "/" +
-                    time.getDate() + "/" +
-                    time.getFullYear();
-
-    stamp.prettyTime = time.getHours() + ":" + 
-                    time.getMinutes() + ":" +
-                    time.getSeconds();    
-
-    stamp.json = JSON.stringify(time);
-    return stamp;    
-}
 
 // used for testing
 app.get('/alive', function(req, res){ 
