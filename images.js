@@ -14,8 +14,8 @@ images.save = function saveImage(image, filename, directory,type){
     var decoded = new Buffer(data, 'base64');
 
     // directory and image paths
-    var dirPath = 'uploads/' + directory; 
-    var imgPath = 'uploads/' + directory + '/' + filename;
+    var dirPath = 'public/uploads/' + directory; 
+    var imgPath = 'public/uploads/' + directory + '/' + filename;
 
     // create directory if it does not exist
     if (!fs.exists(dirPath)){

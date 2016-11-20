@@ -6,7 +6,9 @@ var uuid    = require('uuid');
 var multer  = require('multer');
 var upload  = multer({ dest: 'uploads/' });
 var images  = require('./images.js');
-var fs      = require('fs');
+
+// static files under public
+app.use(express.static('public'));
 
 // allow CORS
 app.use(function(req, res, next) {
@@ -92,9 +94,13 @@ app.get('/videos/:id', function(req, res){
 });
 
 // add a new kog
+var uploadsCounter = 0;
 app.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
 
-    // image data
+    console.log('Hit on app.post("uploads", ... number: ' + uploadsCounter);
+    uploadsCounter++;
+
+    // kog data
     var data      = JSON.parse(req.body.userPhoto);
     var id        = uuid.v4();
     var date      = JSON.stringify(new Date());
@@ -115,7 +121,7 @@ app.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
     };
 
     // save the uploaded image
-    images.save(image, filename, directory, data.input.type);  
+    images.save(image, filename, directory, type);  
 
     // save the kog data
     kogs.push(kog).last().value();
