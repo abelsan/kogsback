@@ -1,6 +1,7 @@
-var express = require('express');
-var app     = express();
-var router  = require('./routes.js');
+var express 	 = require('express');
+var app     	 = express();
+var router       = require('./routes.js');
+
 
 // static files under public
 app.use(express.static('public'));

@@ -5,9 +5,10 @@ var db  = low('db.json');
 var data = {};  
 
 // init the data store
-db.defaults({ kogs: [], videos:[] }).value();
+db.defaults({ kogs: [], videos:[], users:[] }).value();
 var kogs   = db.get('kogs');
 var videos = db.get('videos');
+var users  = db.get('users');
 
 // get all kogs
 data.getKogs = function (){
@@ -26,7 +27,8 @@ data.getKogById = function (id){
 // get kogs for user
 data.getKogsByUser = function (id){
     var userkogs = kogs.filter({userid:id}).value();
-    console.log(userkogs);      	
+    console.log(userkogs);
+    return userkogs;      	
 };
 
 // add a new kog
@@ -37,7 +39,7 @@ data.addKog = function (kog){
 
 // get videos for kog id
 data.getVideosById = function (id){
-    var videoList = videos.filter({id:id}).value();
+    var videoList = videos.filter({kogid:id}).value();
     console.log(videoList); 
     return videoList; 
 };
@@ -48,7 +50,20 @@ data.addVideo = function (video){
     console.log(video);      
 };
 
+// add a new user
+data.addUser = function (user){
+    users.push(user).last().value();
+    console.log(user);      
+};
 
+// authenticate user - for now just confirm it exists
+data.getUserByEmail = function (email){
+    var user = users.find({email:email}).value();
+    console.log('data:');     
+    console.log(user); 
+    if (user) return user;
+    return null;
+};
 
 
 module.exports = data;

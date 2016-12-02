@@ -4,31 +4,40 @@ var multer  = require('multer');
 var upload  = multer({ dest: 'uploads/' });
 var images  = require('./images.js');
 var data    = require('./data.js');
+var cookie  = require('cookie');
+var jwt     = require('jsonwebtoken');
+var secret  = 'shhhhh';
 
-// temp route holder
-var temp = express.Router();
+
+// route middleware - will happen on every request
+var apiRoutes = express.Router();
+var open      = express.Router();
+var auth      = express.Router();
+apiRoutes.use('/open', open);
+apiRoutes.use('/auth', auth);
 
 // get all kogs
-temp.get('/kogs', function(req, res){ 
+open.get('/kogs', function(req, res){ 
     res.send(data.getKogs());
     res.end();    
 });
 
 // get kog using kog id
-temp.get('/kogs/:id', function(req, res){
+open.get('/kogs/:id', function(req, res){
     res.send(data.getKogById(req.params.id));
     res.end();
 });
 
 // get kogs for user
-temp.get('/kogs/:userid', function(req, res){
+open.get('/kogs/user/:userid', function(req, res){
     res.send(data.getKogsByUser(req.params.userid));    
     res.end();
 });
 
 // add new kog
-temp.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
+auth.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
     // kog data
+    console.log(JSON.parse(req.body.userPhoto));
     var img       = JSON.parse(req.body.userPhoto);
     var id        = uuid.v4();
     var date      = JSON.stringify(new Date());
@@ -39,7 +48,7 @@ temp.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
     var kog = {
         "id"          : id,        
         'title'       : req.body.title, 
-        'userid'      : 'peter',
+        'userid'      : req.body.userid,
         'description' : req.body.description,
         'level'       : req.body.level,
         'tags'        : req.body.tags,
@@ -57,16 +66,18 @@ temp.post('/uploads', upload.single('userPhoto'), function (req, res, next) {
 });
 
 // get videos for kog id
-temp.get('/videos/:id', function(req, res){
+open.get('/videos/:id', function(req, res){
     res.send(data.getVideosById(req.params.id));
     res.end();
 });
 
 // add new video
-temp.post('/videos', function (req, res) {
+auth.post('/videos', function (req, res) {
     var date      = JSON.stringify(new Date());
     var video = {
-        "id"          : req.body.id,        
+        'id'          : uuid.v4(),                
+        'kogid'       : req.body.kogid,        
+        'userid'      : req.body.userid,
         'title'       : req.body.title, 
         'link'        : req.body.link,
         'description' : req.body.description,
@@ -76,13 +87,63 @@ temp.post('/videos', function (req, res) {
     res.end();
 });
 
+// register and set token in cookie
+open.post('/register', function(req, res){
+
+    // view posted values
+    console.log(req.body.email + ':' + req.body.password);
+
+    // create user object
+    var id   = uuid.v4();
+    var user = { 
+        id       : id, 
+        email    : req.body.email, 
+        password : req.body.password 
+    };
+    data.addUser(user);        
+
+    // create token - send back in cookie    
+    var token = jwt.sign(user, secret);
+    res.send({userid: id, token:token});        
+    res.end();      
+});
+
+// authenticate user and set token in cookie
+open.post('/authenticate', function(req, res){
+
+    // view posted values
+    console.log(req.body.email + ':' + req.body.password);
+
+    // get user object
+    var user = data.getUserByEmail(req.body.email);
+
+    if (user){
+        // create token - send back in cookie    
+        var token = jwt.sign(user, secret);
+        res.send({userid: user.id, token:token});        
+        res.end();              
+    }
+    else{
+        res.status(500).send('Authentication Failed');        
+        res.end();
+    }
+});
+
+// read cookie
+open.get('/read', function (req, res) {
+    var cookies = cookie.parse(req.body.cookies);
+    console.log(cookies);
+    res.send(cookies);
+    res.end();
+});
+
 // used for testing
-temp.get('/greeting', function(req, res){ 
+open.get('/greeting', function(req, res){ 
     console.log('Hello World!');
     res.send({greeting : 'Hello World'});
     res.end();    
 });
 
 module.exports = function (app) {
-    app.use('/api', temp);
+    app.use('/api', apiRoutes);
 };

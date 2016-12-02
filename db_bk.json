@@ -1,0 +1,191 @@
+{
+  "kogs": [
+    {
+      "id": "4cc13533-ef53-407a-bfba-ab1820024049",
+      "title": "NodeJS",
+      "userid": "0c9b2936-2d4c-42d2-9581-fe3cfa54d0f7",
+      "description": "<p>Event-driven I/O server-side JavaScript environment based on V8. Includes API documentation, change-log, examples and announcements.</p>",
+      "level": "Beginner",
+      "tags": "kogs,education,JavaScript",
+      "date": "\"2016-12-02T22:13:07.812Z\"",
+      "path": "20161202/4cc13533ef53407abfbaab1820024049.jpg"
+    },
+    {
+      "id": "5a519859-74c5-4ab6-8b2b-cfe7d7a8bf8d",
+      "title": "Tensor Flow",
+      "userid": "ac0b5624-9f19-44ed-81a3-c6b1dd68c148",
+      "description": "<p>Machine learning platform from Google</p>",
+      "level": "Beginner",
+      "tags": "kogs,education,ML",
+      "date": "\"2016-12-02T22:13:07.819Z\"",
+      "path": "20161202/5a51985974c54ab68b2bcfe7d7a8bf8d.jpg"
+    },
+    {
+      "id": "ad919740-31e4-4feb-9abd-af0e53eb72a1",
+      "title": "Apache Spark",
+      "userid": "12fa355f-90d8-4bf7-9824-ccfb36ddf8c1",
+      "description": "<p>Apache Spark is a fast and general engine for big data processing, with built-in modules for streaming, SQL, machine learning and graph processing.</p>",
+      "level": "Beginner",
+      "tags": "kogs,education,ML",
+      "date": "\"2016-12-02T22:13:07.826Z\"",
+      "path": "20161202/ad91974031e44feb9abdaf0e53eb72a1.jpg"
+    },
+    {
+      "id": "fdaf40ce-dfeb-4445-ab4a-4b19bf67c7e4",
+      "title": "NPM",
+      "userid": "0c9b2936-2d4c-42d2-9581-fe3cfa54d0f7",
+      "description": "<p>Package manager. Installs, publishes and manages node programs</p>",
+      "level": "Beginner",
+      "tags": "kogs,education,JavaScript",
+      "date": "\"2016-12-02T22:13:07.833Z\"",
+      "path": "20161202/fdaf40cedfeb4445ab4a4b19bf67c7e4.jpg"
+    },
+    {
+      "id": "d94a0edc-6543-4aa2-a89f-366e712e49af",
+      "title": "MongoDB",
+      "userid": "ac0b5624-9f19-44ed-81a3-c6b1dd68c148",
+      "description": "<p>MongoDB for GIANT Ideas - Build innovative modern applications that create a competitive advantage</p>",
+      "level": "Beginner",
+      "tags": "kogs,education,Mongo",
+      "date": "\"2016-12-02T22:13:07.839Z\"",
+      "path": "20161202/d94a0edc65434aa2a89f366e712e49af.jpg"
+    },
+    {
+      "id": "f69310ca-45f9-4624-893c-482dff52172c",
+      "title": "Json Web Tokens",
+      "userid": "12fa355f-90d8-4bf7-9824-ccfb36ddf8c1",
+      "description": "<p>JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.</p>",
+      "level": "Beginner",
+      "tags": "kogs,education,ML",
+      "date": "\"2016-12-02T22:13:07.847Z\"",
+      "path": "20161202/f69310ca45f94624893c482dff52172c.jpg"
+    }
+  ],
+  "videos": [
+    {
+      "id": "5f1be8e5-8427-419e-b38c-30802d0feef7",
+      "kogid": "4cc13533-ef53-407a-bfba-ab1820024049",
+      "userid": "0c9b2936-2d4c-42d2-9581-fe3cfa54d0f7",
+      "title": "What is Node.js Exactly?",
+      "link": "https://www.youtube.com/watch?v=pU9Q6oiQNd0",
+      "description": "<p>What exactly is node.js? Is it a command-line tool, a language, the same thing as Ruby on Rails?<p>",
+      "date": "\"2016-12-02T22:13:07.852Z\""
+    },
+    {
+      "id": "1627943d-b10c-4a7d-a687-9dcbdff81a6c",
+      "kogid": "4cc13533-ef53-407a-bfba-ab1820024049",
+      "userid": "0c9b2936-2d4c-42d2-9581-fe3cfa54d0f7",
+      "title": "Node.js at Netflix",
+      "link": "https://www.youtube.com/watch?v=p74282nDMX8",
+      "description": "<p>Node at scale, 69 million members, in over 60 countries, streaming 100 million hrs/day</p>",
+      "date": "\"2016-12-02T22:13:07.857Z\""
+    },
+    {
+      "id": "a2e4f343-41e8-4ee9-99b0-ddc18cfce998",
+      "kogid": "fdaf40ce-dfeb-4445-ab4a-4b19bf67c7e4",
+      "userid": "0c9b2936-2d4c-42d2-9581-fe3cfa54d0f7",
+      "title": "What is NPM?",
+      "link": "https://www.youtube.com/watch?v=pa4dc480Apo",
+      "description": "<p>NPM fundamentals<p>",
+      "date": "\"2016-12-02T22:13:07.863Z\""
+    },
+    {
+      "id": "6c39412e-1ec5-4b5f-b9ad-e5ef7af72d53",
+      "kogid": "fdaf40ce-dfeb-4445-ab4a-4b19bf67c7e4",
+      "userid": "0c9b2936-2d4c-42d2-9581-fe3cfa54d0f7",
+      "title": "Installing npm packages locally",
+      "link": "https://www.youtube.com/watch?v=JDSfqFFbNYQ",
+      "description": "<p>How to install packages in your project folder.</p>",
+      "date": "\"2016-12-02T22:13:07.867Z\""
+    },
+    {
+      "id": "689d3c6b-9b56-41ac-9923-87fee5205b59",
+      "kogid": "5a519859-74c5-4ab6-8b2b-cfe7d7a8bf8d",
+      "userid": "ac0b5624-9f19-44ed-81a3-c6b1dd68c148",
+      "title": "TensorFlow: Open source machine learning",
+      "link": "https://www.youtube.com/watch?v=p74282nDMX8",
+      "description": "<p>TensorFlow is an open source software library for numerical computation using data flow graphs. Originally developed by researchers and engineers working on the Google Brain Team within Googles Machine Intelligence research organization for the purposes of conducting machine learning and deep neural networks research.</p>",
+      "date": "\"2016-12-02T22:13:07.875Z\""
+    },
+    {
+      "id": "302a8122-298c-4174-a0d2-206d88377e61",
+      "kogid": "5a519859-74c5-4ab6-8b2b-cfe7d7a8bf8d",
+      "userid": "ac0b5624-9f19-44ed-81a3-c6b1dd68c148",
+      "title": "TensorFlow - Deep Learning Simplified",
+      "link": "https://www.youtube.com/watch?v=bYeBL92v99Y",
+      "description": "<p>Googles TensorFlow is currently the most popular Deep Learning library on GitHub. This video will provide an overview of the librarys strengths, weaknesses, and numerous features.</p>",
+      "date": "\"2016-12-02T22:13:07.880Z\""
+    },
+    {
+      "id": "cc399daf-481c-4e86-8d0c-0a0204e7d344",
+      "kogid": "d94a0edc-6543-4aa2-a89f-366e712e49af",
+      "userid": "ac0b5624-9f19-44ed-81a3-c6b1dd68c148",
+      "title": "MongoDB in 30 Minutes",
+      "link": "https://www.youtube.com/watch?v=pWbMrx5rVBE",
+      "description": "<p>Covers the fundamentals and the syntax to create, read, update and delete documents/data</p>",
+      "date": "\"2016-12-02T22:13:07.885Z\""
+    },
+    {
+      "id": "63662f21-8285-44af-9c62-038acf1d7d17",
+      "kogid": "d94a0edc-6543-4aa2-a89f-366e712e49af",
+      "userid": "ac0b5624-9f19-44ed-81a3-c6b1dd68c148",
+      "title": "Mongodb Tutorial for Beginners",
+      "link": "https://www.youtube.com/watch?v=-0X8mr6Q8Ew",
+      "description": "<p>Installation of MongoDB on both Windows and Mac. We willll also cover how to use Mongo, Mongod, executing JavaScript, creating databases, creating documents, insert, update, find, remove, data types, executing external JS scripts, the mongorc.js file and much more.</p>",
+      "date": "\"2016-12-02T22:13:07.891Z\""
+    },
+    {
+      "id": "410d1695-e5bb-4672-9a11-dfa0aeb9b025",
+      "kogid": "ad919740-31e4-4feb-9abd-af0e53eb72a1",
+      "userid": "12fa355f-90d8-4bf7-9824-ccfb36ddf8c1",
+      "title": "First Steps With Spark",
+      "link": "https://www.youtube.com/watch?v=bWorBGOFBWY",
+      "description": "<p>In this screencast, we (1) take a quick tour of the documentation available for Spark users online, (2) download and build Spark on a local machine (running OS X, but should be a similar process for Linux or Unix), and (3) Introduce the API using the Spark interactive shell to explore a file.</p>",
+      "date": "\"2016-12-02T22:13:07.897Z\""
+    },
+    {
+      "id": "646625bd-07b5-4276-94d0-079740889e39",
+      "kogid": "ad919740-31e4-4feb-9abd-af0e53eb72a1",
+      "userid": "12fa355f-90d8-4bf7-9824-ccfb36ddf8c1",
+      "title": "A Deeper Understanding of Spark Internals",
+      "link": "https://www.youtube.com/watch?v=dmL0N3qfSc8",
+      "description": "<p>A Deeper Understanding of Spark Internals </p>",
+      "date": "\"2016-12-02T22:13:07.900Z\""
+    },
+    {
+      "id": "7c28e298-310d-4188-b253-3f347d342cd7",
+      "kogid": "f69310ca-45f9-4624-893c-482dff52172c",
+      "userid": "12fa355f-90d8-4bf7-9824-ccfb36ddf8c1",
+      "title": "Introduction to JSON Web Tokens",
+      "link": "https://www.youtube.com/watch?v=J-9Q469kyJc",
+      "description": "<p>Find out what a JSON Web Token (JWT) is and how it works.</p>",
+      "date": "\"2016-12-02T22:13:07.910Z\""
+    },
+    {
+      "id": "8b26c1de-e26e-4147-8143-c4e720af2eca",
+      "kogid": "ad919740-31e4-4feb-9abd-af0e53eb72a1",
+      "userid": "12fa355f-90d8-4bf7-9824-ccfb36ddf8c1",
+      "title": "Build Secure User Interfaces using JWTs",
+      "link": "https://www.youtube.com/watch?v=Lv9jun9Eqqw",
+      "description": "<p>How to use Json Web Tokens</p>",
+      "date": "\"2016-12-02T22:13:07.914Z\""
+    }
+  ],
+  "users": [
+    {
+      "id": "0c9b2936-2d4c-42d2-9581-fe3cfa54d0f7",
+      "email": "peter@mit.edu",
+      "password": "nothing"
+    },
+    {
+      "id": "ac0b5624-9f19-44ed-81a3-c6b1dd68c148",
+      "email": "clark@mit.edu",
+      "password": "nothing"
+    },
+    {
+      "id": "12fa355f-90d8-4bf7-9824-ccfb36ddf8c1",
+      "email": "bruce@mit.edu",
+      "password": "nothing"
+    }
+  ]
+}
