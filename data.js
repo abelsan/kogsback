@@ -65,5 +65,11 @@ data.getUserByEmail = function (email){
     return null;
 };
 
+// authenticate user - for now just confirm it exists
+data.getUserById = function (id){
+    var user = users.find({id:id}).value();
+    if (user) return user;
+    return null;
+};
 
 module.exports = data;

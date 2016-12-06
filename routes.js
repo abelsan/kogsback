@@ -6,8 +6,9 @@ var images  = require('./images.js');
 var data    = require('./data.js');
 var cookie  = require('cookie');
 var jwt     = require('jsonwebtoken');
+var bcrypt  = require('bcrypt');
 var secret  = 'shhhhh';
-
+var saltRounds = 10;
 
 // route middleware - will happen on every request
 var apiRoutes = express.Router();
@@ -15,6 +16,59 @@ var open      = express.Router();
 var auth      = express.Router();
 apiRoutes.use('/open', open);
 apiRoutes.use('/auth', auth);
+
+
+auth.use(function(req, res, next) {
+
+    // log request type and path
+    console.log(req.method, req.url);
+
+    // superagent sends a OPTIONS request on CORS - ignore request
+    if (req.method === 'OPTIONS') {
+        next();             
+    }
+
+    // on GET/POST check authentication
+    if (req.method === 'GET' || req.method === 'POST') {
+
+        var user = data.getUserById(req.body.userid);
+
+        if (req.body.token && user){
+            var decoded = jwt.verify(req.body.token, user.secondFactor);
+            console.log('decoded:');
+            console.log(decoded);            
+
+            // match token info with user info
+            if (decoded.email === user.email && decoded.id === user.id) {
+                req.token = {email : decoded.email, userid : decoded.id};
+                next();             
+            }
+            else {
+                console.log('Unauthorized Route!');            
+                res.send('Unauthorized Route!');
+                res.end();
+            }        
+        }
+        else {
+            console.log('Unauthorized Route!');            
+            res.send('Unauthorized Route!');
+            res.end();            
+        }
+
+    }
+});
+
+// root path
+auth.post('/token', function (req, res) {
+    if(req.token){
+        console.log('Route verified:');   
+        console.log(req.token);
+        res.send(req.token);        
+    }
+    res.end();
+});
+
+
 
 // get all kogs
 open.get('/kogs', function(req, res){ 
@@ -90,22 +144,32 @@ auth.post('/videos', function (req, res) {
 // register and set token in cookie
 open.post('/register', function(req, res){
 
-    // view posted values
-    console.log(req.body.email + ':' + req.body.password);
+    bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+        console.log(hash);
 
-    // create user object
-    var id   = uuid.v4();
-    var user = { 
-        id       : id, 
-        email    : req.body.email, 
-        password : req.body.password 
-    };
-    data.addUser(user);        
+        // view posted values
+        console.log(req.body.email + ':' + req.body.password);
 
-    // create token - send back in cookie    
-    var token = jwt.sign(user, secret);
-    res.send({userid: id, token:token});        
-    res.end();      
+        // create user object
+        var id           = uuid.v4();
+        var secondFactor = uuid.v4();    
+        var user = { 
+            id           : id, 
+            email        : req.body.email, 
+            password     : hash,
+            secondFactor : secondFactor
+        };
+        data.addUser(user);        
+
+        // create token - send back in cookie    
+        var token = jwt.sign({
+            id    : user.id,
+            email : user.email
+        }, user.secondFactor);
+        res.send({userid: user.id, token:token});        
+        res.end();    
+    });
+
 });
 
 // authenticate user and set token in cookie
@@ -118,16 +182,34 @@ open.post('/authenticate', function(req, res){
     var user = data.getUserByEmail(req.body.email);
 
     if (user){
-        // create token - send back in cookie    
-        var token = jwt.sign(user, secret);
-        res.send({userid: user.id, token:token});        
-        res.end();              
+        bcrypt.compare(req.body.password, user.password, function(err, result) {
+            if(result === true) {
+                console.log('success!');
+
+                // create token
+                var token = jwt.sign({
+                    id    : user.id,
+                    email : user.email
+                }, user.secondFactor);
+
+                // return token
+                res.send({userid: user.id, token:token});        
+                res.end();              
+            }
+            else{
+                console.log('fail!');       
+                res.status(500).send('Authentication Failed');        
+                res.end();
+            }
+        });
     }
     else{
         res.status(500).send('Authentication Failed');        
         res.end();
     }
 });
+
+
 
 // read cookie
 open.get('/read', function (req, res) {
