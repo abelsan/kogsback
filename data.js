@@ -44,10 +44,29 @@ data.getVideosById = function (id){
     return videoList; 
 };
 
-// add a new kog
+// add a new video
 data.addVideo = function (video){
     videos.push(video).last().value();
     console.log(video);      
+};
+
+// update video
+data.updateVideo = function (video){
+    videos.find({ id: video.id }).assign({ title: video.title, link: video.link, description: video.description, lastUpdate:video.date}).value();
+    console.log(video);      
+};
+
+data.deleteVideo = function(id){
+    var result = videos.remove({ id: id }).value();
+
+    if(result && result.length > 0) {
+        console.log('video delete success');
+        return true;
+    }
+    else{
+        console.log('Video delete fail');
+        return false;
+    }    
 };
 
 // add a new user

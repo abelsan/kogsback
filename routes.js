@@ -141,6 +141,35 @@ auth.post('/videos', function (req, res) {
     res.end();
 });
 
+// update video
+auth.post('/updateVideo', function (req, res) {
+    var date      = JSON.stringify(new Date());
+    var video = {
+        'id'          : req.body.id,
+        'title'       : req.body.title, 
+        'link'        : req.body.link,
+        'description' : req.body.description,
+        'date'        : date
+    };
+    data.updateVideo(video);
+    res.end();
+});
+
+
+// delete video
+auth.post('/deleteVideo', function (req, res) {
+    if (data.deleteVideo(req.body.id)){
+        res.send({message: 'video delete success'});        
+        res.end();              
+    }
+    else{
+        console.log('fail!');       
+        res.status(500).send('Video delete fail');
+        res.end();
+    }
+});
+
+
 // register and set token in cookie
 open.post('/register', function(req, res){
 
